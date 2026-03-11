@@ -1,11 +1,676 @@
-
 @import "tailwindcss";
 
 @source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
 @source "../../storage/framework/views/*.php";
 @source "../**/*.blade.php";
 @source "../**/*.js";
+
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   01) LOCAL FONTS
+========================================================= */
+@font-face {
+    font-family: 'Cairo';
+    src: url('/fonts/Cairo-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cairo';
+    src: url('/fonts/Cairo-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cairo';
+    src: url('/fonts/Cairo-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cairo';
+    src: url('/fonts/Cairo-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cairo';
+    src: url('/fonts/Cairo-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* =========================================================
+   02) THEME VARIABLES
+========================================================= */
+:root {
+    --color-primary: #39338B;
+    --color-primary-dark: #2f2a74;
+    --color-secondary: #2EA1B8;
+    --color-secondary-dark: #27889b;
+
+    --color-bg: #F8FAFC;
+    --color-surface: #FFFFFF;
+    --color-text: #1F2937;
+    --color-muted: #6B7280;
+    --color-border: #E5E7EB;
+
+    --shadow-soft: 0 10px 30px rgba(57, 51, 139, 0.08);
+    --shadow-card: 0 12px 36px rgba(15, 23, 42, 0.08);
+
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --radius-xl: 28px;
+
+    --header-height: 96px;
+    --container-max: 1280px;
+
+    --section-space-y: 88px;
+    --section-space-y-sm: 64px;
+}
+
+/* =========================================================
+   03) BASE / RESET
+========================================================= */
+@layer base {
+    html {
+        direction: rtl;
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        font-family: 'Cairo', sans-serif;
+        background: var(--color-bg);
+        color: var(--color-text);
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    ::selection {
+        background: rgba(46, 161, 184, 0.18);
+        color: var(--color-primary);
+    }
+}
+
+/* =========================================================
+   04) REUSABLE LAYOUT & COMMON COMPONENTS
+========================================================= */
+@layer components {
+
+    /* -----------------------------
+       Container
+    ----------------------------- */
+    .site-container {
+        width: 100%;
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding-inline: 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .site-container {
+            padding-inline: 1.5rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .site-container {
+            padding-inline: 2rem;
+        }
+    }
+
+    /* -----------------------------
+       Sections
+    ----------------------------- */
+    .section {
+        padding-block: var(--section-space-y);
+    }
+
+    @media (max-width: 768px) {
+        .section {
+            padding-block: var(--section-space-y-sm);
+        }
+    }
+
+    .section-title {
+        font-size: clamp(1.5rem, 2vw, 2.5rem);
+        font-weight: 800;
+        line-height: 1.3;
+        color: var(--color-primary);
+    }
+
+    .section-subtitle {
+        max-width: 720px;
+        font-size: 1rem;
+        line-height: 1.9;
+        color: var(--color-muted);
+    }
+
+    /* -----------------------------
+       Surfaces / Cards
+    ----------------------------- */
+    .card-surface {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-soft);
+    }
+
+    /* -----------------------------
+       Buttons
+    ----------------------------- */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: .55rem;
+        min-height: 50px;
+        padding-inline: 1.35rem;
+        border-radius: 14px;
+        font-size: .95rem;
+        font-weight: 700;
+        transition: all .25s ease;
+        white-space: nowrap;
+    }
+
+    .btn-primary {
+        background: var(--color-primary);
+        color: #fff;
+        box-shadow: 0 10px 24px rgba(57, 51, 139, 0.18);
+    }
+
+    .btn-primary:hover {
+        background: var(--color-primary-dark);
+        transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+        background: var(--color-secondary);
+        color: #fff;
+        box-shadow: 0 10px 24px rgba(46, 161, 184, 0.18);
+    }
+
+    .btn-secondary:hover {
+        background: var(--color-secondary-dark);
+        transform: translateY(-1px);
+    }
+
+    .btn-outline {
+        background: #fff;
+        color: var(--color-primary);
+        border: 1px solid rgba(57, 51, 139, 0.18);
+    }
+
+    .btn-outline:hover {
+        background: rgba(57, 51, 139, 0.04);
+        border-color: rgba(57, 51, 139, 0.30);
+    }
+
+    /* =========================================================
+       05) HEADER
+    ========================================================= */
+
+    /* -----------------------------
+       Header Wrapper
+    ----------------------------- */
+    .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 60;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(229, 231, 235, 0.9);
+    }
+
+    .site-header-inner {
+        position: relative;
+        min-height: var(--header-height);
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    /* -----------------------------
+       Brand Area
+       الشعار على اليمين والنص على يساره
+    ----------------------------- */
+    .brand-wrap {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        min-width: 0;
+        flex-shrink: 0;
+        color: inherit;
+    }
+
+    .brand-logo {
+        width: 72px;
+        height: 72px;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+
+    .brand-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: right;
+        line-height: 1.35;
+        min-width: 0;
+    }
+
+    .brand-title-inline {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        flex-wrap: wrap;
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--color-primary);
+    }
+
+    .brand-title-ar {
+        color: var(--color-primary);
+        font-weight: 800;
+    }
+
+    .brand-title-en {
+        color: var(--color-primary);
+        font-weight: 800;
+        direction: ltr;
+        unicode-bidi: embed;
+    }
+
+    .brand-subtitle-inline {
+        margin: .2rem 0 0;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--color-text);
+    }
+
+    /* -----------------------------
+       Navigation
+    ----------------------------- */
+    .nav-menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        min-width: 0;
+    }
+
+    .nav-link {
+        position: relative;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--color-text);
+        transition: color .22s ease;
+        padding-block: .25rem;
+    }
+
+    .nav-link:hover,
+    .nav-link.is-active {
+        color: var(--color-primary);
+    }
+
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: -14px;
+        width: 0;
+        height: 4px;
+        border-radius: 999px;
+        background: var(--color-secondary);
+        transition: width .22s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.is-active::after {
+        width: 100%;
+    }
+
+    /* -----------------------------
+       Header Actions
+    ----------------------------- */
+    .header-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-shrink: 0;
+    }
+
+    .header-cta {
+        min-height: 54px;
+        padding-inline: 1.75rem;
+        border-radius: 18px;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    /* -----------------------------
+       Mobile Toggle
+    ----------------------------- */
+    .menu-toggle {
+        display: none;
+        width: 46px;
+        height: 46px;
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        background: #fff;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 5px;
+        flex-shrink: 0;
+    }
+
+    .menu-toggle span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--color-primary);
+        border-radius: 999px;
+    }
+
+    /* =========================================================
+       06) FOOTER
+    ========================================================= */
+
+    .site-footer {
+        position: relative;
+        overflow: hidden;
+        margin-top: 5rem;
+        background: linear-gradient(135deg, rgba(57, 51, 139, 0.98), rgba(30, 27, 75, 0.98));
+        color: #fff;
+    }
+
+    .site-footer::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at top right, rgba(46, 161, 184, 0.16), transparent 28%),
+            radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.05), transparent 24%);
+        pointer-events: none;
+    }
+
+    .site-footer-inner {
+        position: relative;
+        z-index: 1;
+        padding-block: 4rem 1.5rem;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1.2fr .8fr 1fr;
+        gap: 2rem;
+    }
+
+    .footer-heading {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #fff;
+    }
+
+    .footer-text {
+        font-size: .98rem;
+        line-height: 2;
+        color: rgba(255, 255, 255, 0.82);
+    }
+
+    .footer-links {
+        display: grid;
+        gap: .85rem;
+    }
+
+    .footer-link {
+        font-size: .97rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.82);
+        transition: all .2s ease;
+    }
+
+    .footer-link:hover {
+        color: #fff;
+        transform: translateX(-2px);
+    }
+
+    .footer-contact {
+        display: grid;
+        gap: .8rem;
+        font-size: .96rem;
+        line-height: 1.9;
+        color: rgba(255, 255, 255, 0.86);
+    }
+
+    .footer-contact strong {
+        color: #fff;
+        font-weight: 800;
+    }
+
+    .footer-bottom {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 2.25rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        font-size: .92rem;
+        color: rgba(255, 255, 255, 0.72);
+    }
+
+    .footer-brand {
+        display: flex;
+        align-items: center;
+        gap: .9rem;
+        margin-bottom: 1rem;
+    }
+
+    .footer-brand-logo {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: .4rem;
+    }
+
+    .footer-brand-name {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: #fff;
+    }
+
+    .footer-brand-sub {
+        margin-top: .15rem;
+        font-size: .92rem;
+        color: rgba(255, 255, 255, 0.75);
+    }
+
+    /* =========================================================
+       07) RESPONSIVE
+    ========================================================= */
+
+    /* -----------------------------
+       Tablet / Small Laptop
+    ----------------------------- */
+    @media (max-width: 1100px) {
+        .site-header-inner {
+            grid-template-columns: auto auto;
+            gap: 1rem 1.5rem;
+            padding-block: 1rem;
+        }
+
+        .nav-menu {
+            grid-column: 1 / -1;
+            order: 3;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem 1.25rem;
+        }
+
+        .header-actions {
+            justify-content: flex-start;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .footer-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    /* -----------------------------
+       Mobile
+    ----------------------------- */
+    @media (max-width: 767px) {
+        .site-header {
+            height: auto;
+        }
+
+        .site-header-inner {
+            grid-template-columns: 1fr auto;
+            min-height: auto;
+            padding-block: 1rem;
+        }
+
+        .brand-logo {
+            width: 56px;
+            height: 56px;
+        }
+
+        .brand-title-inline {
+            font-size: .95rem;
+            gap: .3rem;
+        }
+
+        .brand-subtitle-inline {
+            font-size: .78rem;
+            line-height: 1.6;
+        }
+
+        .menu-toggle {
+            display: inline-flex;
+        }
+
+        .nav-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: 0;
+            display: none;
+            flex-direction: column;
+            align-items: stretch;
+            gap: .4rem;
+            padding: 1rem;
+            background: #fff;
+            border-bottom: 1px solid var(--color-border);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        body.menu-open .nav-menu {
+            display: flex;
+        }
+
+        .nav-link {
+            padding: .8rem .75rem;
+            border-radius: 12px;
+        }
+
+        .nav-link::after {
+            display: none;
+        }
+
+        .nav-link.is-active {
+            background: rgba(46, 161, 184, 0.08);
+        }
+
+        .header-actions {
+            display: none;
+        }
+
+        .footer-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    /* -----------------------------
+       Small Mobile
+    ----------------------------- */
+    @media (max-width: 520px) {
+        .brand-wrap {
+            gap: .65rem;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+        }
+
+        .brand-title-inline {
+            font-size: .8rem;
+        }
+
+        .brand-subtitle-inline {
+            font-size: .68rem;
+        }
+    }
+    //layout.app
+
+    .site-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.site-main {
+    flex: 1;
+}
 }
