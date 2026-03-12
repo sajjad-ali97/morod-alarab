@@ -9,11 +9,10 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('is_active', true)
-            ->orderBy('sort_order')
-            ->get();
 
+        $categories = Category::withCount('products')->latest()->get();
         $settings = SiteSetting::first();
+
 
         return view('categories.index', compact('categories', 'settings'));
     }

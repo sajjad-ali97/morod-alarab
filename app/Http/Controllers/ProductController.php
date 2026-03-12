@@ -18,14 +18,12 @@ class ProductController extends Controller
         $selectedCategory = $request->query('category');
 
         $products = Product::with('category')
-            ->where('is_active', true)
             ->when($selectedCategory && $selectedCategory !== 'all', function ($query) use ($selectedCategory) {
                 $query->whereHas('category', function ($q) use ($selectedCategory) {
                     $q->where('slug', $selectedCategory);
                 });
             })
-            ->orderBy('sort_order')
-            ->latest('id')
+            ->latest()
             ->get();
 
         $settings = SiteSetting::first();
