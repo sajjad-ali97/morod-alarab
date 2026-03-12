@@ -23,12 +23,12 @@
 
                     <div class="flex flex-wrap gap-4">
                         <a href="{{ route('categories.index') }}"
-                           class="inline-flex items-center rounded-xl bg-amber-500 px-6 py-4 text-sm font-bold text-white hover:bg-amber-600 transition">
+                           class="btn btn-primary">
                             استعراض الأقسام
                         </a>
 
                         <a href="{{ route('products.index') }}"
-                           class="inline-flex items-center rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-sm font-bold text-white hover:bg-white/10 transition">
+                           class="btn btn-secondary">
                             مشاهدة المنتجات
                         </a>
                     </div>

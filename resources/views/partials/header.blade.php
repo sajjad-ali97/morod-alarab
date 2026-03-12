@@ -55,6 +55,10 @@
                 <a href="{{ route('contact') }}" class="nav-link {{ request()->routeIs('contact') ? 'is-active' : '' }}">
                     تواصل معنا
                 </a>
+                 {{-- زر الموبايل داخل القائمة --}}
+    <a href="{{ route('products.index') }}" class="btn btn-primary mobile-menu-cta">
+        استعراض المنتجات
+    </a>
             </nav>
 
             <div class="header-actions">

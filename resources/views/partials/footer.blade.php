@@ -47,16 +47,19 @@
                     <div class="footer-contact">
                         <div><strong>الشركة:</strong> شركة مورد العرب</div>
                         <div><strong>النشاط:</strong> للتجارة والمقاولات العامة</div>
-                        <div><strong>البريد:</strong> info@mawridalarab.com</div>
-                        <div><strong>الهاتف:</strong> +964 000 000 0000</div>
-                    </div>
+                        <div><strong>البريد:</strong>  mawridalarab@yahoo.com</div>
+<div>
+    <strong>الهاتف:</strong>
+    <a href="tel:+9647716662409" class="ltr-number">أتصال مباشر +9647716662409  </a>
+</div>                   </div>
                 </div>
 
             </div>
 
             <div class="footer-bottom">
                 <span>© {{ now()->year }} شركة مورد العرب. جميع الحقوق محفوظة.</span>
-                <span>تصميم وتطوير الموقع باحترافية عالية</span>
+                <span>تصميم وتطوير الموقع :سجاد الحيدري     <a href="tel:+9647732250410" class="ltr-number">  +9647732250410 /</a>
+ </span>
             </div>
         </div>
     </div>
